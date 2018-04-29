@@ -1,0 +1,21 @@
+"""
+SQL问题
+写一个 SQL 查询语句，满足条件：无论 person 是否有地址信息，都需要基于上述两表提供 person 的以下信息
+题目中出现无论'一词,意识就是以某一表为基准,所以要使用左连接或右连接.
+"""
+
+"""
+left join   :左连接，返回左表中所有的记录以及右表中连接字段相等的记录。right join :右连接，返回右表中所有的记录以及左表中连接字段相等的记录。
+
+SQL语句
+
+inner join: 内连接，又叫等值连接，只返回两个表中连接字段相等的行。
+
+full join:外连接，返回两个表中的行：left join + right join
+
+cross join:结果是笛卡尔积，就是第一个表的行数乘以第二个表的行数。
+"""
+
+
+# Write your MySQL query statement below
+select Person.FirstName, Person.LastName, Address.City, Address.State from Address right join Person on (Person.PersonId = Address.PersonId)

@@ -1,0 +1,43 @@
+Given a text file file.txt, print just the 10th line of the file.
+
+Example:
+
+Assume that file.txt has the following content:
+
+Line 1
+Line 2
+Line 3
+Line 4
+Line 5
+Line 6
+Line 7
+Line 8
+Line 9
+Line 10
+Your script should output the tenth line, which is:
+
+Line 10
+
+方法1:
+sed -n "10p" file.txt
+
+方法2:
+l10=`head -n 10 file.txt | wc -l`
+if [ "$l10" = "10" ]; then
+head -n 10 file.txt | tail -1
+fi
+
+
+方法3
+cnt = 0
+while read line
+do
+    cnt = $((cnt+1))
+    if[$cnt -eq 10];
+    then
+        echo $line
+        fi
+done < file.txt
+
+方法4:
+cat file.txt | sed -n "10p"

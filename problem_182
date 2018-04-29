@@ -1,0 +1,51 @@
+编写一个 SQL查询，来查找名为 Person 的表中的所有重复电子邮件。
+
+示例：
+
++----+---------+
+| Id | Email   |
++----+---------+
+| 1  | a@b.com |
+| 2  | c@d.com |
+| 3  | a@b.com |
++----+---------+
+根据以上输入，您的查询应返回以下结果：
+
++---------+
+| Email   |
++---------+
+| a@b.com |
++---------+
+注意： 所有电子邮件都是小写字母。
+
+select Email from Person group by Email having count(Email) > 1;
+
+SELECT Email FROM Person
+GROUP BY Email
+Having COUNT(Email)>1;
+
+--Use self join.
+ SELECT DISTINCT a.Email
+ FROM Person a JOIN Person b
+ ON (a.Email = b.Email)
+ WHERE a.Id <> b.Id
+
+--Use subquery with EXISTS:
+ SELECT DISTINCT a.Email
+ FROM Person a
+ WHERE EXISTS(
+     SELECT 1
+     FROM Person b
+     WHERE a.Email = b.Email
+     LIMIT 1, 1
+
+
+--Basic idea is this query:
+ SELECT DISTINCT Email FROM Person
+ MINUS(SELECT Id, Email FROM Person GROUP BY Email)
+But since MySQL does not support MINUS, we use LEFT JOIN:
+
+ SELECT DISTINCT a.Email FROM Person a
+ LEFT JOIN (SELECT Id, Email from Person GROUP BY Email) b
+ ON (a.email = b.email) AND (a.Id = b.Id)
+ WHERE b.Email IS NULL
